@@ -6,9 +6,9 @@ spec:
   selector:
     app: connectionsposts
   ports:
-  - protocol: "TCP"
-    port: 80
-    targetPort: 8080
+    - protocol: "TCP"
+      port: 80
+      targetPort: 8080
   type: NodePort
 ---
 apiVersion: apps/v1beta1
@@ -28,32 +28,32 @@ spec:
         app: connectionsposts
     spec:
       containers:
-      - name: connectionsposts
-        image: cdavisafc/cloudnative-applifecycle-connectionposts:0.0.2
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 5
-        env:
-          - name: INSTANCE_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: CONNECTIONPOSTSCONTROLLER_POSTSURL
-            value: "http://192.168.99.100:32119/posts?userIds="
-          - name: CONNECTIONPOSTSCONTROLLER_CONNECTIONSURL
-            value: "http://192.168.99.100:30955/connections/"
-          - name: CONNECTIONPOSTSCONTROLLER_USERSURL
-            value: "http://192.168.99.100:30955/users/"
-          - name: REDIS_HOSTNAME
-            value: "192.168.99.100"
-          - name: REDIS_PORT
-            value: "31537"
-          - name: SPRING_APPLICATION_NAME
-            value: "mycookbook"
-          - name: SPRING_CLOUD_CONFIG_URI
-            value: "http://192.168.99.100:30455"
-          - name: VERSIONING_TRIGGER
-            value: "2"
+        - name: connectionsposts
+          image: cdavisafc/cloudnative-applifecycle-connectionposts:0.0.2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          env:
+            - name: INSTANCE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CONNECTIONPOSTSCONTROLLER_POSTSURL
+              value: "http://192.168.99.100:32119/posts?userIds="
+            - name: CONNECTIONPOSTSCONTROLLER_CONNECTIONSURL
+              value: "http://192.168.99.100:30955/connections/"
+            - name: CONNECTIONPOSTSCONTROLLER_USERSURL
+              value: "http://192.168.99.100:30955/users/"
+            - name: REDIS_HOSTNAME
+              value: "192.168.99.100"
+            - name: REDIS_PORT
+              value: "31537"
+            - name: SPRING_APPLICATION_NAME
+              value: "mycookbook"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://192.168.99.100:30455"
+            - name: VERSIONING_TRIGGER
+              value: "2"
